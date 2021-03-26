@@ -1,7 +1,5 @@
 ## Introduction
-This framework is built on top of PHP Slim Framework 4, built similarly to Laravel but more customizable and probably has lesser deployment problems (at least in shared hosting).
-
-It is configured to be able to use Eloquent ORM to deal with database operations, as well as bootstrap CSS and JS for faster front-end development.
+Pet website for ICT1004.
 
 ## Installation
 Clone this repository, create .env file with reference to .example.env file.
