@@ -11,8 +11,6 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Http\UploadedFile;
 
-use Aws\S3\S3Client;
-use Aws\Common\Aws;
 
 class PostsController extends Controller
 {

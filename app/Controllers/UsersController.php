@@ -8,7 +8,6 @@ use Illuminate\Database\Capsule\Manager as DB;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-use Aws\S3\S3Client;
 
 class UsersController extends Controller
 {
