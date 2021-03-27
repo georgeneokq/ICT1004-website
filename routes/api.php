@@ -11,7 +11,7 @@
  * 4. Return the response object
  */
 
-namespace App\Middleware;
+use App\Middleware\AuthToken;
 
 use Slim\Routing\RouteCollectorProxy;
 
@@ -28,6 +28,9 @@ $app->group('/api', function(RouteCollectorProxy $group) {
     $group->group('', function(RouteCollectorProxy $group) {
         $group->post('/users/logout', C.'UsersController:logout');
         $group->get('/news-feed', C.'PostsController:getNewsFeed');
+        $group->post('/posts/create', C.'PostsController:createPost');
+        $group->post('/posts/like', C.'PostsController:likePost');
+        $group->post('/posts/unlike', C.'PostsController:unlikePost');
     })->add(new AuthToken());
 
     /* FOR DEVELOPMENT ONLY */

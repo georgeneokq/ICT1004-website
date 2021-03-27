@@ -38,4 +38,24 @@ class Controller
     protected function get($body, $key) {
         return isset($body[$key]) ? $body[$key] : null;
     }
+
+    /*
+     * Writes a base64 string to disk
+     */
+    protected function base64_write($base64_string, $output_file) {
+        // open the output file for writing
+        $file_write = fopen($output_file, 'wb'); 
+    
+        // split the string on commas
+        // $data[ 0 ] == "data:image/png;base64"
+        // $data[ 1 ] == <actual base64 string>
+        $data = explode(',', $base64_string);
+
+        $data = count($data) > 1 ? $data[1] : $data[0];
+    
+        fwrite($file_write, base64_decode($data));
+    
+        // clean up the file resource
+        fclose($file_write);
+    }
 }

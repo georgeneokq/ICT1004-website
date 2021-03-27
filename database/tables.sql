@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- Table of users following one another
 CREATE TABLE IF NOT EXISTS followers (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id INT(11) UNSIGNED, -- User following
+    user_id INT(11) UNSIGNED NOT NULL, -- User following
     following_user_id INT(11) UNSIGNED, -- User being followed
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (following_user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS followers (
 -- Posts to be made by users
 CREATE TABLE IF NOT EXISTS posts (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id INT(11) UNSIGNED,
+    user_id INT(11) UNSIGNED NOT NULL,
     content TEXT(2000),
     category VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS posts (
 -- Sales
 CREATE TABLE IF NOT EXISTS sales (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id INT(11) UNSIGNED,
+    user_id INT(11) UNSIGNED NOT NULL,
     for_adoption INT(1) NOT NULL,
     location VARCHAR(255),
     category VARCHAR(255) NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS sales (
 -- Images that belong to a post. Links to an image in some external storage
 CREATE TABLE IF NOT EXISTS post_images (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    post_id INT(11) UNSIGNED,
+    post_id INT(11) UNSIGNED NOT NULL,
     post_image_url VARCHAR(255) NOT NULL,
     caption TEXT(255),
     FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
@@ -65,8 +65,8 @@ CREATE TABLE IF NOT EXISTS post_images (
 -- Post likes made by users
 CREATE TABLE IF NOT EXISTS post_likes (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    post_id INT(11) UNSIGNED,
-    user_id INT(11) UNSIGNED,
+    post_id INT(11) UNSIGNED NOT NULL,
+    user_id INT(11) UNSIGNED NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -75,8 +75,8 @@ CREATE TABLE IF NOT EXISTS post_likes (
 -- Post comments made by users
 CREATE TABLE IF NOT EXISTS post_comments (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    post_id INT(11) UNSIGNED,
-    user_id INT(11) UNSIGNED,
+    post_id INT(11) UNSIGNED NOT NULL,
+    user_id INT(11) UNSIGNED NOT NULL,
     content TEXT(500) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS post_comments (
 -- Store the user session tokens that will be refreshed with every request
 CREATE TABLE IF NOT EXISTS user_sessions (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id INT(11) UNSIGNED,
+    user_id INT(11) UNSIGNED NOT NULL,
     token VARCHAR(255) NOT NULL UNIQUE,
     expires_at TIMESTAMP NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS user_sessions (
 -- Store admin session tokens
 CREATE TABLE IF NOT EXISTS admin_sessions (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    admin_id INT(11) UNSIGNED,
+    admin_id INT(11) UNSIGNED NOT NULL,
     token VARCHAR(255) NOT NULL UNIQUE,
     expires_at TIMESTAMP NOT NULL,
     FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE

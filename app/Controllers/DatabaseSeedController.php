@@ -15,6 +15,7 @@ class DatabaseSeedController extends Controller
      * FOR DEVELOPMENT ONLY: SEED DATABASE
      */
     public function seed(Request $request, Response $response) {
+        // Clear database
         $users_count = 50;
         for($i = 1; $i <= $users_count; $i++) {
             $user = [

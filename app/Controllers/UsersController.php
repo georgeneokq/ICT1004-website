@@ -3,10 +3,12 @@ namespace App\Controllers;
 
 use App\Models\User;
 use App\Models\UserSession;
-use Illuminate\Database\Capsule\Manager as DB;
 
+use Illuminate\Database\Capsule\Manager as DB;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+
+use Aws\S3\S3Client;
 
 class UsersController extends Controller
 {
@@ -94,15 +96,10 @@ class UsersController extends Controller
         return $response;
     }
 
-    private function requestToken($user_id) {
-
-    }
-
     public function updateProfileImage(Request $request, Response $response) {
         $profile_image = $this->get($request->getUploadedFiles(), 'profile_image'); // Might need a [0] here.
 
         /* TODO: REPLACE WITH ACTUAL URL ONCE INTERGRATED WITH S3BUCKET */
         $profile_image_url = 'https://animeshelter.com/wp-content/uploads/2020/11/jujutsu-kaisen-episode-7-2455.jpg';
-
     }
 }

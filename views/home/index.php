@@ -14,14 +14,32 @@
     <script src="js/libs/sweetalert2.all.min.js"></script>
 
     <style>
+        .main-container {
+            word-wrap: break-word;
+            padding: 5%;
+        }
     </style>
 
 </head>
 <body>
     <div class="main-container" style="text-align:center">
-        <form>
-            
-        </form>
+        <h1><?php echo $title; ?></h1>
+
+        <br>
+
+        <h2 style="text-decoration:underline;text-align:center;">Users (Total Count: <?php print(count($users)); ?>)</h2>
+        <?php foreach($users as $user): ?>
+            <span><?php echo $user; ?></span>
+            <br>
+        <?php endforeach; ?>
+        <h2 style="text-decoration:underline;text-align:center;">Posts (Total Count: <?php print(count($posts)); ?>)</h2>
+        <?php foreach($posts as $post): ?>
+        <span><?php echo $post; ?></span>
+        <?php foreach($post->images as $image): ?>
+        <img src="<?php echo $image->post_image_url; ?>" alt="An image" height="300px;">
+        <?php endforeach; ?>
+        <br>
+        <?php endforeach; ?>
     </div>
 
     <script>
