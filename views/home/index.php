@@ -28,11 +28,12 @@
         <br>
         <h2 style="text-decoration:underline;text-align:center;">User1's news feed (Total Count: <?php print(count($user1_news_feed)); ?>)</h2>
         <?php foreach($user1_news_feed as $post): ?>
-        <span><?php echo $post; ?></span>
+        <span>Post id: <?php echo $post->id ?>, Content: <?php echo $post->content ?></span>
+        <br>
         <?php foreach($post->images as $image): ?>
         <img src="<?php echo $image->post_image_url; ?>" alt="An image" height="300px;">
         <?php endforeach; ?>
-        <br>
+        <br><br>
         <?php endforeach; ?>
     
 

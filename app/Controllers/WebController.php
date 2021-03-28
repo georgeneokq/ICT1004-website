@@ -29,8 +29,9 @@ class WebController extends Controller
         $start = 1;
         $end = 100;
         $end = $end - $start + 1;
-        $user1_news_feed = DB::select('SELECT posts.id, posts.user_id, posts.content, posts.category, posts.created_at FROM followers LEFT JOIN posts ON posts.user_id = followers.following_user_id WHERE followers.user_id = ? OR posts.user_id = ? ORDER BY posts.created_at DESC LIMIT ?, ?', [$user_id, $user_id, $start, $end]);
-        
+        $user1_news_feed = DB::select('SELECT DISTINCT posts.id, posts.user_id, posts.content, posts.category, posts.created_at FROM followers LEFT JOIN posts ON posts.user_id = followers.following_user_id WHERE followers.user_id = ? OR posts.user_id = ? ORDER BY posts.id, posts.user_id, posts.content, posts.category, posts.created_at DESC LIMIT ?, ?', [$user_id, $user_id, $start, $end]);
+        $user1_news_feed = array_reverse($user1_news_feed);
+
         // For each post, get the post_image(s)
         foreach($user1_news_feed as $post) {
             $images = PostImage::where('post_id', $post->id)->get();
