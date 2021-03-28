@@ -73,22 +73,22 @@ class PostsController extends Controller
         
         $category = $this->get($body, 'category');
         $content = $this->get($body, 'content');
-        $uploadedFiles = $request->getUploadedFiles();
-        $images = isset($uploadedFiles['images']) ? $uploadedFiles['images'] : [];
-
+        
         $post = new Post();
         $post->user_id = $user->id;
         $post->category = $category;
         $post->content = $content;
         $post->save();
-
         
-        foreach($images as $counter=>$image) {
-            $extension = pathinfo($image->getClientFilename(), PATHINFO_EXTENSION);
-            $file_name = sprintf('%s_%s.%s', $post->id, $counter + 1, $extension); // {post_id}_{counter}.{extension}
+        $files_count = isset($_FILES['images']) ? count($_FILES['images']['name']) : 0;
+        for($i = 0; $i < $files_count; $i++) {
+            $name = $_FILES["images"]["name"][$i];
+            $extension = end((explode(".", $name)));
+            $file_name = sprintf('%s_%s.%s', $post->id, $i + 1, $extension); // {post_id}_{counter}.{extension}
             $file_save_path = sprintf('%s/%s', $this->post_images_upload_path, $file_name);
             $file_url = sprintf('/uploads/post-images/%s', $file_name); /* Might want to change this to the full site URL */
-            $image->moveTo($file_save_path);
+            $tmp_location = $_FILES['images']['tmp_name'][$i];
+            move_uploaded_file($tmp_location, $file_save_path);
 
             // Create new post image 
             $post_image = new PostImage();

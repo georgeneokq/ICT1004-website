@@ -21,6 +21,7 @@ class WebController extends Controller
         foreach($posts as $post) {
             $post->likes_count = count($post->likes);
         }
+        
         $args = [
             'title' => $title,
             'users' => $users,

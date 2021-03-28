@@ -46,6 +46,7 @@ class DatabaseSeedController extends Controller
                 $model = new Post();
                 $model->user_id = $post['user_id'];
                 $model->content = $post['content'];
+                $model->category = $post['category'];
                 $model->save();
             }
         }
