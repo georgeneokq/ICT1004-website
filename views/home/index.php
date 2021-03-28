@@ -26,19 +26,29 @@
         <h1><?php echo $title; ?></h1>
 
         <br>
-
-        <h2 style="text-decoration:underline;text-align:center;">Users (Total Count: <?php print(count($users)); ?>)</h2>
-        <?php foreach($users as $user): ?>
-            <span><?php echo $user; ?></span>
-            <br>
+        <h2 style="text-decoration:underline;text-align:center;">User1's news feed (Total Count: <?php print(count($user1_news_feed)); ?>)</h2>
+        <?php foreach($user1_news_feed as $post): ?>
+        <span><?php echo $post; ?></span>
+        <?php foreach($post->images as $image): ?>
+        <img src="<?php echo $image->post_image_url; ?>" alt="An image" height="300px;">
         <?php endforeach; ?>
-        <h2 style="text-decoration:underline;text-align:center;">Posts (Total Count: <?php print(count($posts)); ?>)</h2>
+        <br>
+        <?php endforeach; ?>
+    
+
+        <h2 style="text-decoration:underline;text-align:center;">All posts (Total Count: <?php print(count($posts)); ?>)</h2>
         <?php foreach($posts as $post): ?>
         <span><?php echo $post; ?></span>
         <?php foreach($post->images as $image): ?>
         <img src="<?php echo $image->post_image_url; ?>" alt="An image" height="300px;">
         <?php endforeach; ?>
         <br>
+        <?php endforeach; ?>
+
+        <h2 style="text-decoration:underline;text-align:center;">Users (Total Count: <?php print(count($users)); ?>)</h2>
+        <?php foreach($users as $user): ?>
+            <span><?php echo $user; ?></span>
+            <br>
         <?php endforeach; ?>
     </div>
 
