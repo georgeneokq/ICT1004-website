@@ -36,4 +36,4 @@ $app->group('/api', function(RouteCollectorProxy $group) {
 
     /* FOR DEVELOPMENT ONLY */
     $group->get('/seed', C.'DatabaseSeedController:seed');
-})->add(new AllowCors());
+})->add(new AllowCORS());
