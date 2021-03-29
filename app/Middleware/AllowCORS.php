@@ -15,6 +15,8 @@ class AllowCORS extends Middleware
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
         $response = $handler->handle($request);
-        return $response->withHeader("Access-Control-Allow-Methods", '*');
+        return $response->withHeader("Access-Control-Allow-Methods", '*')
+                        ->withHeader('Access-Control-Allow-Origin', '*')
+                        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization');
     }
 }
