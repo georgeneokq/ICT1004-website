@@ -59,11 +59,19 @@ class UsersController extends Controller
         if($user) {
             // Check hash
             if(password_verify($password, $user->password)) {
-                $token = $user->renewToken();
+                $session = $user->renewToken();
+                $token = $session->token;
+                $expires_at = $session->expires_at;
+
+                // Remove "password" and "activated" field from user and return to client
+                unset($user->password);
+                unset($user->activated);
                 
                 $response->getBody()->write($this->encode([
                     'err' => 0,
-                    '_token' => $token
+                    '_token' => $token,
+                    '_token_expiry' => $expires_at,
+                    'user' => $user
                 ]));
                 return $response;
             }

@@ -13,7 +13,7 @@ class User extends Model
     /*
      * Relations
      */
-    public function user_sessions() {
+    public function session() {
         return $this->hasOne(UserSession::class);
     }
 
@@ -44,7 +44,7 @@ class User extends Model
         }
         $user_session->save();
 
-        return $token;
+        return $user_session;
     }
 
     private function generateToken() {
@@ -56,7 +56,6 @@ class User extends Model
         $time = time();
         $time += $this->token_expiry_timer;
         $expiry = date('Y-m-d H:i:s', $time);
-        printf($expiry);
         return $expiry;
     }
 }
