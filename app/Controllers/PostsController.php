@@ -55,6 +55,11 @@ class PostsController extends Controller
         foreach($posts as $post) {
             $is_liked = PostLike::where(['post_id' => $post->id, 'user_id' => $user->id])->first();
             $post->is_liked = $is_liked ? 1 : 0;
+            $num_likes = DB::table('post_likes')
+                                ->selectRaw('count(*) AS count')
+                                ->where('post_id', $post->id)
+                                ->first()->count;
+            $post->num_likes = $num_likes;
             $images = PostImage::where('post_id', $post->id)->get();
             $post->images = $images;
             $user = User::find($post->user_id);
