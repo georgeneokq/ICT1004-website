@@ -118,10 +118,18 @@ class PostsController extends Controller
     }
 
     public function likePost(Request $request, Response $response) {
-        $body = $request->getParsedBody();
+        $params = $request->getQueryParams();
         $token = $request->getAttribute('_token');
         $user = User::getByToken($token);
-        $post_id = $this->get($body, 'post_id');
+        $post_id = $this->get($params, 'post_id');
+
+        if(!$post_id) {
+            $response->getBody()->write($this->encode([
+                'err' => 1,
+                'msg' => 'Missing query parameter post_id.'
+            ]));
+            return $response;
+        }
         
         // Check if the post is already liked. If yes, return error
         $like = PostLike::where(['post_id' => $post_id, 'user_id' => $user->id])->first();
@@ -130,6 +138,16 @@ class PostsController extends Controller
             $response->getBody()->write($this->encode([
                 'err' => 1,
                 'msg' => 'This post is already liked by this user.'
+            ]));
+            return $response;
+        }
+
+        // Check if such a post exists
+        $post_exists = Post::find($post_id);
+        if(!$post_exists) {
+            $response->getBody()->write($this->encode([
+                'err' => 1,
+                'msg' => 'No such post.'
             ]));
             return $response;
         }
@@ -149,6 +167,17 @@ class PostsController extends Controller
         $body = $request->getParsedBody();
         $token = $request->getAttribute('_token');
         $user = User::getByToken($token);
+
+        $params = $request->getQueryParams();
+        $post_id = $this->get($params, 'post_id');
+
+        if(!$post_id) {
+            $response->getBody()->write($this->encode([
+                'err' => 1,
+                'msg' => 'Missing query parameter post_id.'
+            ]));
+            return $response;
+        }
 
         $like = PostLike::where(['post_id' => $post_id, 'user_id' => $user->id])->first();
 

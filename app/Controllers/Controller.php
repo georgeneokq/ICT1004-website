@@ -26,7 +26,7 @@ class Controller
         $this->view = $container->get('view');
     }
 
-    public function doNothing(Request $request, Response $response) {
+    public function preflight(Request $request, Response $response) {
         return $response;
     }
 
