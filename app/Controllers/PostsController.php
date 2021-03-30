@@ -51,8 +51,10 @@ class PostsController extends Controller
         $posts = DB::select('SELECT DISTINCT posts.id, posts.user_id, posts.content, posts.category, posts.created_at FROM followers LEFT JOIN posts ON posts.user_id = followers.following_user_id WHERE followers.user_id = ? OR posts.user_id = ? ORDER BY posts.id, posts.user_id, posts.content, posts.category, posts.created_at DESC LIMIT ?, ?', [$user->id, $user->id, $start, $end]);
         $posts = array_reverse($posts);
 
-        // For each post, get the post_image(s) and user
+        // For each post, get the post_image(s) and user, and whether it is liked by the user
         foreach($posts as $post) {
+            $is_liked = PostLike::where(['post_id' => $post->id, 'user_id' => $user->id])->first();
+            $post->is_liked = $is_liked ? 1 : 0;
             $images = PostImage::where('post_id', $post->id)->get();
             $post->images = $images;
             $user = User::find($post->user_id);
