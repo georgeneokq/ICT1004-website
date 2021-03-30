@@ -46,6 +46,7 @@ $routeCollector->setDefaultInvocationStrategy(new RequestResponseArgs());
  */
 $app->addBodyParsingMiddleware();
 //$app->addRoutingMiddleware();
+$app->add(new App\Middleware\AllowCORS());
 $app->add(new App\Middleware\RemoveTrailingSlash());
 
 /*

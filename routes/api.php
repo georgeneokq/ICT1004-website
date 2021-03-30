@@ -13,6 +13,7 @@
 
 use App\Middleware\AuthToken;
 use App\Middleware\AllowCORS;
+use App\Middleware\EnforceJSONRequest;
 
 use Slim\Routing\RouteCollectorProxy;
 
@@ -36,4 +37,4 @@ $app->group('/api', function(RouteCollectorProxy $group) {
 
     /* FOR DEVELOPMENT ONLY */
     $group->get('/seed', C.'DatabaseSeedController:seed');
-})->add(new AllowCORS());
+});

@@ -79,7 +79,8 @@ class UsersController extends Controller
         /* Validation failed. Don't give too much information about the invalid attempt, in case of hacking attempt */
         $response->getBody()->write($this->encode([
             'err' => 1,
-            'msg' => 'Invalid credentials'
+            'msg' => 'Invalid credentials',
+            'email' => $body
         ]));
         return $response;
     }
