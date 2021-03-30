@@ -26,6 +26,10 @@ class Controller
         $this->view = $container->get('view');
     }
 
+    public function doNothing(Request $request, Response $response) {
+        return $response;
+    }
+
     protected function encode($content) {
         return json_encode($content, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }

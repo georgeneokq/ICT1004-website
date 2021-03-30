@@ -12,8 +12,6 @@
  */
 
 use App\Middleware\AuthToken;
-use App\Middleware\AllowCORS;
-use App\Middleware\EnforceJSONRequest;
 
 use Slim\Routing\RouteCollectorProxy;
 
@@ -30,6 +28,7 @@ $app->group('/api', function(RouteCollectorProxy $group) {
     $group->group('', function(RouteCollectorProxy $group) {
         $group->post('/users/logout', C.'UsersController:logout');
         $group->get('/news-feed', C.'PostsController:getNewsFeed');
+        $group->options('/news-feed', C.'Controller:doNothing');
         $group->post('/posts/create', C.'PostsController:createPost');
         $group->post('/posts/like', C.'PostsController:likePost');
         $group->post('/posts/unlike', C.'PostsController:unlikePost');

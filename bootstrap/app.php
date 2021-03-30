@@ -44,10 +44,13 @@ $routeCollector->setDefaultInvocationStrategy(new RequestResponseArgs());
  * Declare global route Middleware.
  * Middleware execution is LIFO. Hence, the Middleware to be executed first should be added last.
  */
+$app->options('{.+}', function ($request, $response, $args) {
+    return $response;
+});
 $app->addBodyParsingMiddleware();
-//$app->addRoutingMiddleware();
 $app->add(new App\Middleware\AllowCORS());
 $app->add(new App\Middleware\RemoveTrailingSlash());
+
 
 /*
  *
