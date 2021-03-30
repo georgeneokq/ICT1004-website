@@ -51,10 +51,13 @@ class PostsController extends Controller
         $posts = DB::select('SELECT DISTINCT posts.id, posts.user_id, posts.content, posts.category, posts.created_at FROM followers LEFT JOIN posts ON posts.user_id = followers.following_user_id WHERE followers.user_id = ? OR posts.user_id = ? ORDER BY posts.id, posts.user_id, posts.content, posts.category, posts.created_at DESC LIMIT ?, ?', [$user->id, $user->id, $start, $end]);
         $posts = array_reverse($posts);
 
-        // For each post, get the post_image(s)
+        // For each post, get the post_image(s) and user
         foreach($posts as $post) {
             $images = PostImage::where('post_id', $post->id)->get();
             $post->images = $images;
+            $user = User::find($post->user_id);
+            unset($user->password);
+            $post->user = $user;
         }
 
         $response->getBody()->write($this->encode([
