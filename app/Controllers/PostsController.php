@@ -35,10 +35,10 @@ class PostsController extends Controller
         $params = $request->getQueryParams();
         $start = $this->get($params, 'start');
         $end = $this->get($params, 'end');
-        if(!$start || !$end) {
+        if($start == null || $end == null) {
             $response->getBody()->write($this->encode([
                 'err' => 1,
-                'msg' => '"start" and "end" query parameters are required. For example: /api/news-feed?start=1&end=10'
+                'msg' => '"start" and "end" query parameters are required. For example: /api/news-feed?start=1&end=10',
             ]));
             return $response;
         } else {
