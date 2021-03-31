@@ -8,6 +8,7 @@
     height: 200px;
     object-fit: cover;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 .post-profile-image {
@@ -25,12 +26,6 @@ a.post-profile-username:hover {
 
 .post-images-container div {
     padding: 5px;
-}
-
-.post-images-container div img {
-    border-radius: 5px;
-    object-fit: contain;
-    width: 100%;
 }
 
 .btn-like {

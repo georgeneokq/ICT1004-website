@@ -2,6 +2,27 @@
 // ------------------------------- General Purpose Javascript ------------------------------------
 
 /*
+ * Converts Javascript object into FormData.
+ * Use this to send multipart/form-data to the server.
+ *
+ */
+function toFormData(object, formData = null) {
+    if(!formData) {
+        formData = new FormData();
+    }
+    for (let key in object) {
+        if(Array.isArray(object[key])) {
+            for(let array_item of object[key]) {
+                formData.append(key, array_item);
+            }
+        } else {
+            formData.append(key, object[key]);
+        }
+    }
+    return formData;
+}
+
+/*
  * @param array The array to do sorting on
  * @param reverse Boolean value to indicate whether array should be sorted in ascending or descending order
  * @param sortKey If the array contains objects which all have an identical structure, it is possible to specify a key to sort by.
@@ -163,6 +184,8 @@ function imageModalOverlayClickedListener(e)
 // -------------------------------------------- Store objects in sessionStorage -----------------------------------------------
 
 /*
+ * Insert an item into array in localStorage as a JSON format string and retrieves them using JSON.parse
+ *
  * @param arrayName String name of the array to store in sessionStorage
  * @param object Object item to store in specified array
  * 
@@ -192,6 +215,8 @@ function storeInSession(arrayName, object)
 }
 
 /*
+ * Insert an array of items into array in localStorage as a JSON format string and retrieves them using JSON.parse
+ *
  * @param arrayName String name of the array to store in sessionStorage
  * @param array Array of objects to store in the specified array
  * 
