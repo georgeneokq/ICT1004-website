@@ -45,3 +45,6 @@ post_max_size = 105M
 ```
 
 When moving uploaded files in Linux, retrieve files from `$_FILES` superglobal and use `move_uploaded_file()` function to do move the files. Even though the `uploadedFile` objects returned by `$request->getUploadedFiles()` provide a convenient`moveTo()` method, it doesn't work in Linux (after spending a whole day tinkering around with user groups and permissions, this method still didn't work).
+
+# Change your server machine's timezone
+For timestamps to be accurate, do remember to change your timezone accordingly.
