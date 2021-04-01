@@ -7,4 +7,5 @@
 
 // Controller namespace shorthand for convenience
 
-$app->get('/', C.'WebController:home');
+$app->get('/', C.'WebController:landing');
+$app->get('/home', C.'WebController:home');

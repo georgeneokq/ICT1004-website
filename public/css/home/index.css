@@ -12,7 +12,9 @@ body {
     background: rgb(200, 200, 0);
 }
 
+
 /* Top navbar */
+
 #navbar {
     display: flex;
     background: orange;
@@ -31,9 +33,11 @@ body {
     align-self: flex-end;
 }
 
+
 /* For my scrolling plugin */
+
 #posts {
     width: 100%;
     height: calc(100vh - 30px);
-    overflow-y: scroll;
+    overflow-y: auto;
 }

@@ -1,44 +1,4 @@
-// Hard-code login without form
-let BASE_URL = 'http://34.193.147.252';
-let loginCredentials = {
-    email: 'user1@gmail.com',
-    password: 'p@ssw0rd'  
-};
-
-async function login()
-{
-    if(localStorage._token) {
-        // Initialize the news feed
-        initializeNewsFeed('#posts');
-        return;
-    }
-    console.log('Logging in');
-
-    let url = BASE_URL + '/api/users/login';
-
-    let body = toFormData({
-        email: loginCredentials.email,
-        password: loginCredentials.password
-    });
-    
-    let response = await fetch(url, {
-        method: 'POST',
-        body: body
-    });
-
-    let data = await response.json();
-
-    if(!data.err) {
-        // Store token in localStorage for future use, even after browser is restarted
-        console.log(`Saved token: ${data._token}`);
-        localStorage._token = data._token;
-
-        // Initialize the news feed
-        initializeNewsFeed('#posts');
-    } else {
-        console.log(data.msg);
-    }
-}
+let BASE_URL = '';
 
 /*
  * Requires bootstrap CSS.
@@ -63,7 +23,7 @@ async function initializeNewsFeed(elementSelector) {
 
     // Add styles
     container.style.display = 'block';
-    
+
     // Add loading gif at bottom of container, hide it first
     const showPostsLoading = _ => {
         let gif = document.createElement('img');
@@ -79,13 +39,13 @@ async function initializeNewsFeed(elementSelector) {
 
     const hidePostsLoading = _ => {
         let gif = document.getElementById('news-feed-spinner');
-        if(gif) {
+        if (gif) {
             gif.parentNode.removeChild(gif);
-        }  
+        }
     };
 
     const getLikeIconSrc = is_liked => {
-        if(parseInt(is_liked)) {
+        if (parseInt(is_liked)) {
             return `${BASE_URL}/img/icon-heart-filled.png`;
         }
         return `${BASE_URL}/img/icon-heart-unfilled.png`;
@@ -93,23 +53,23 @@ async function initializeNewsFeed(elementSelector) {
 
     /* The profile image may not be set. If there is no URL, return a default image link */
     const getUserProfileImage = user => {
-        if(user.profile_image_url) {
+        if (user.profile_image_url) {
             return `${BASE_URL}${user.profile_image_url}`;
         }
         return `${BASE_URL}/img/default-profile-image.png`;
     };
-    
+
     const insertImages = post => {
         let html = '';
-        for(let image of post.images) {
+        for (let image of post.images) {
             html += `
             <div class="col-sm-6">
                 <img class="post-image" src="${BASE_URL}${image.post_image_url}">
                 </div>
                 `;
-            }
-            return html;
-        };
+        }
+        return html;
+    };
 
     // Counters to track the latest post number
     let nextPostToRequest = 0;
@@ -123,7 +83,7 @@ async function initializeNewsFeed(elementSelector) {
         showPostsLoading();
         let url = makeUrl(nextPostToRequest);
         let response = await fetch(url, {
-            headers: {'_token': localStorage._token},
+            headers: { '_token': localStorage._token },
         });
         let data = await response.json();
         hidePostsLoading();
@@ -133,12 +93,13 @@ async function initializeNewsFeed(elementSelector) {
         let posts = data.posts;
         nextPostToRequest += count;
 
-        if(count == 0) {
+        if (count == 0) {
             isNewsFeedEnd = true;
+            return;
         }
 
         // Form the HTML and add to container
-        for(let post of posts) {
+        for (let post of posts) {
             let html = `
             <div class="post" data-post-id="${post.id}">
             <img src="${getUserProfileImage(post.user)}" class="post-profile-image" width="100px">
@@ -158,13 +119,13 @@ async function initializeNewsFeed(elementSelector) {
             `;
             container.innerHTML += html;
         }
-        
+
         // Make images expandable - The function is in util.js
         let postElements = document.getElementsByClassName('post');
-        for(let i = nextPostToRequest - postsPerRequest + 1; i < postElements.length; i++) {
+        for (let i = nextPostToRequest - postsPerRequest + 1; i < postElements.length; i++) {
             let post = postElements[i];
             let images = post.getElementsByClassName('post-image');
-            for(let j = 0; j < images.length; j++) {
+            for (let j = 0; j < images.length; j++) {
                 let image = images[j];
                 enableModalImage(image);
             }
@@ -179,18 +140,18 @@ async function initializeNewsFeed(elementSelector) {
 
             let url = BASE_URL + `/api/posts/like?post_id=${postId}`;
             /* If liked, click it to unlike */
-            if(liked) {
+            if (liked) {
                 /* Dont need to wait for response from server, just update the client side */
                 fetch(url, {
                     method: 'DELETE',
-                    headers: {_token: localStorage._token}
+                    headers: { _token: localStorage._token }
                 });
                 numLikesEl.innerText = --numLikes;
             } else {
                 /* Dont need to wait for response from server, just update the client side */
                 fetch(url, {
                     method: 'POST',
-                    headers: {_token: localStorage._token}
+                    headers: { _token: localStorage._token }
                 });
                 numLikesEl.innerText = ++numLikes;
             }
@@ -204,7 +165,7 @@ async function initializeNewsFeed(elementSelector) {
 
         // Attach click event listener to the like button
         let likeButtons = document.getElementsByClassName('btn-like');
-        for(let i = 0; i < likeButtons.length; i++) {
+        for (let i = 0; i < likeButtons.length; i++) {
             let likeButton = likeButtons[i];
             likeButton.addEventListener('click', likeButtonListener);
         }
@@ -215,11 +176,11 @@ async function initializeNewsFeed(elementSelector) {
 
     // Attach onscroll event to the container
     const scrollListener = async function(e) {
-        if(isNewsFeedEnd) {
+        if (isNewsFeedEnd) {
             container.removeEventListener('scroll', scrollListener);
         }
         // Load more posts if the scroll has hit the bottom
-        if(container.scrollTop >= (container.scrollHeight - container.offsetHeight) && !isLoading) {
+        if (container.scrollTop >= (container.scrollHeight - container.offsetHeight) && !isLoading) {
             loadImages();
         }
     };
@@ -231,4 +192,4 @@ async function initializeNewsFeed(elementSelector) {
 }
 
 // News feed initialization is done in login function
-login();
+initializeNewsFeed('#posts');
