@@ -20,7 +20,10 @@ use Slim\Routing\RouteCollectorProxy;
 $app->group('/api', function(RouteCollectorProxy $group) {
     /* ROUTES ONLY FOR TESTING: TO BE REMOVED DURING PRODUCTION */
     $group->get('/users', C.'UsersController:getAllUsers');
+    $group->get('/seed', C.'DatabaseSeedController:seed');
 
+
+    $group->get('/users/profile', C.'UsersController:getProfile');
     $group->post('/users/signup', C.'UsersController:signup');
     $group->post('/users/login', C.'UsersController:login');
 
@@ -33,7 +36,4 @@ $app->group('/api', function(RouteCollectorProxy $group) {
         $group->delete('/posts/like', C.'PostsController:unlikePost');
         
     })->add(new AuthToken());
-    
-    /* FOR DEVELOPMENT ONLY */
-    $group->get('/seed', C.'DatabaseSeedController:seed');
 });

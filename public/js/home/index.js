@@ -1,4 +1,25 @@
-let BASE_URL = '';
+const BASE_URL = 'http://34.193.147.252';
+
+/*
+ * Load the user profile
+ */
+async function loadUserProfile() {
+    let url = BASE_URL + '/api/users/profile';
+
+    let response = await fetch(url, { headers: { _token: localStorage._token } });
+    let data = await response.json();
+
+    if (!data.err) {
+        let user = data.user;
+
+        let profileImgEl = document.querySelector('.user-pic img');
+        let nameEl = document.querySelector('.user-name');
+        profileImgEl.src = user.profile_image_url ? user.profile_image_url : '/img/test-profile-img.jpg';
+        nameEl.innerText = user.first_name;
+    } else {
+        Swal(data.msg);
+    }
+}
 
 /*
  * Requires bootstrap CSS.
@@ -192,4 +213,5 @@ async function initializeNewsFeed(elementSelector) {
 }
 
 // News feed initialization is done in login function
+loadUserProfile();
 initializeNewsFeed('#posts');

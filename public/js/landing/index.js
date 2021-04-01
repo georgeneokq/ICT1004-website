@@ -1,3 +1,5 @@
+const BASE_URL = 'http://34.193.147.252';
+
 /* Login form */
 const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');
@@ -10,8 +12,6 @@ signUpButton.addEventListener('click', () => {
 signInButton.addEventListener('click', _ => {
     container.classList.remove("right-panel-active");
 });
-
-const BASE_URL = '';
 
 async function login(e) {
     let asd;

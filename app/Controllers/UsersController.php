@@ -104,6 +104,17 @@ class UsersController extends Controller
         return $response;
     }
 
+    public function getProfile(Request $request, Response $response) {
+        $token = $request->getAttribute('_token');
+        $user = User::getByToken($token);
+        unset($user->password);
+        $response->getBody()->write($this->encode([
+            'err' => 0,
+            'user' => $user
+        ]));
+        return $response;
+    }
+
     public function updateProfileImage(Request $request, Response $response) {
         $profile_image = $this->get($request->getUploadedFiles(), 'profile_image'); // Might need a [0] here.
 
