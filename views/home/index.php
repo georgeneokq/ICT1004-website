@@ -21,6 +21,7 @@
 
     <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
 
+    <script src="js/libs/sweetalert2.all.min.js"></script>
     <script src="js/home/index.js" defer></script>
 </head>
 
@@ -41,7 +42,7 @@
                         <span class="user-name">Ben
                             <strong>Dover</strong>
                         </span>
-                        <span class="user-role">Administrator</span>
+                        <span class="user-email"></span>
                         <span class="user-status">
                             <i class="fa fa-circle"></i>
                             <span>Online</span>

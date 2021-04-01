@@ -23,12 +23,13 @@ $app->group('/api', function(RouteCollectorProxy $group) {
     $group->get('/seed', C.'DatabaseSeedController:seed');
 
 
-    $group->get('/users/profile', C.'UsersController:getProfile');
     $group->post('/users/signup', C.'UsersController:signup');
     $group->post('/users/login', C.'UsersController:login');
-
-    // Requires token authentication
+    
+    /* ROUTES THAT REQUIRE TOKEN AUTHENTICATION GO HERE!!! */
     $group->group('', function(RouteCollectorProxy $group) {
+
+        $group->get('/users/profile', C.'UsersController:getProfile');
         $group->post('/users/logout', C.'UsersController:logout');
         $group->get('/news-feed', C.'PostsController:getNewsFeed');
         $group->post('/posts/create', C.'PostsController:createPost');

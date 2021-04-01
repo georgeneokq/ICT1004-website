@@ -25,6 +25,16 @@ class UsersController extends Controller
         $last_name = $this->get($body, 'last_name');
         $biography = $this->get($body, 'biography');
 
+        // Check if the user exists. If it does, send an appropriate error message back
+        $user = User::where('email', $email)->first();
+        if($user) {
+            $response->getBody()->write($this->encode([
+                'err' => 1,
+                'msg' => 'This email is already registered.'
+            ]));
+            return $response;
+        }
+
         // Create user model and save to database
         $user = new User();
         $user->email = $email;

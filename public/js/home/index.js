@@ -6,6 +6,9 @@ const BASE_URL = 'http://34.193.147.252';
 async function loadUserProfile() {
     let url = BASE_URL + '/api/users/profile';
 
+    console.log({
+        headers: { _token: localStorage._token }
+    });
     let response = await fetch(url, { headers: { _token: localStorage._token } });
     let data = await response.json();
 
@@ -14,10 +17,12 @@ async function loadUserProfile() {
 
         let profileImgEl = document.querySelector('.user-pic img');
         let nameEl = document.querySelector('.user-name');
+        let emailEl = document.querySelector('.user-email');
         profileImgEl.src = user.profile_image_url ? user.profile_image_url : '/img/test-profile-img.jpg';
         nameEl.innerText = user.first_name;
+        emailEl.innerText = user.email;
     } else {
-        Swal(data.msg);
+        Swal.fire(data.msg);
     }
 }
 

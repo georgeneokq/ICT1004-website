@@ -49,7 +49,7 @@ class User extends Model
 
     private function generateToken() {
         $random_string = 'a!@# jfbg0--l;adc';
-        return hash('sha256', $this->email . $random_string . $this->id);
+        return hash('sha256', $this->email . $random_string . time());
     }
 
     private function renewTokenExpiry() {
