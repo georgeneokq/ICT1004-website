@@ -148,7 +148,7 @@ class UsersController extends Controller
 
         if($user->save()) {
             $response->getBody()->write($this->encode([
-                'err' => $user
+                'err' => 0
             ]));
         } else {
             $response->getBody()->write($this->encode([
