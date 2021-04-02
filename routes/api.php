@@ -35,6 +35,7 @@ $app->group('/api', function(RouteCollectorProxy $group) {
         $group->post('/posts/create', C.'PostsController:createPost');
         $group->post('/posts/like', C.'PostsController:likePost');
         $group->delete('/posts/like', C.'PostsController:unlikePost');
-        
+        $group->post('/users/updateProfile', C.'UsersController:updateProfile');
+
     })->add(new AuthToken());
 });
