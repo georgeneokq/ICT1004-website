@@ -681,7 +681,8 @@ body {
 
 /*----------sidebar background images --------------*/
 
-.sidebar-bg.bg1 .sidebar-wrapper {
+
+/* .sidebar-bg.bg1 .sidebar-wrapper {
     background-image: url(/img/bg1.jpg);
 }
 
@@ -711,7 +712,7 @@ body {
 
 [data-bg="bg4"] {
     background-image: url(/img/bg4.jpg);
-}
+} */
 
 
 /*---- border-radius ------*/
