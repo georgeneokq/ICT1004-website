@@ -1,4 +1,4 @@
-let production = false;
+let production = true;
 let BASE_URL;
 /*
  * Do variables setup
@@ -6,7 +6,7 @@ let BASE_URL;
 (function() {
     if (production) {
         /* For production when deployed to server */
-        BASE_URL = 'http://localhost';
+        BASE_URL = '';
     } else {
         /* To ease local development */
         BASE_URL = 'https://petstonks.ml';

@@ -24,6 +24,15 @@ class Controller
         $this->container = $container;
         $this->db = $container->get('db');
         $this->view = $container->get('view');
+        $this->settings = $container->get('settings');
+        $this->mailer = $container->get('mailer');
+    }
+    
+    protected function getMailer() {
+        $transport = (new \Swift_SmtpTransport(getenv('MAIL_SERVER'), getenv('MAIL_SERVER_PORT'), getenv('MAIL_PROTOCOL')))
+            ->setUsername(getenv('MAIL_ADDR'))
+            ->setPassword(getenv('MAIL_PASS'));
+        return new \Swift_Mailer($transport);
     }
 
     public function preflight(Request $request, Response $response) {

@@ -33,6 +33,15 @@ $container->set('view', function($container) {
     return new Slim\Views\PhpRenderer(__DIR__ . '/../views/');
 });
 
+// Attach mailer to container's 'mailer' property
+$container->set('mailer', function($container) {
+    $transport = (new \Swift_SmtpTransport(getenv('MAIL_SERVER'), getenv('MAIL_SERVER_PORT'), getenv('MAIL_PROTOCOL')))
+            ->setUsername(getenv('MAIL_ADDR'))
+            ->setPassword(getenv('MAIL_PASS'));
+    $mailer = new \Swift_Mailer($transport);
+    return $mailer;
+});
+
 // Create slim application
 $app = AppFactory::createFromContainer($container);
 

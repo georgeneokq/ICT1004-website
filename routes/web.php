@@ -9,3 +9,4 @@
 
 $app->get('/', C.'WebController:landing');
 $app->get('/home', C.'WebController:home');
+$app->get('/account/verify', C.'WebController:verifyAccount');

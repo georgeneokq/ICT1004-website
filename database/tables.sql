@@ -19,7 +19,17 @@ CREATE TABLE IF NOT EXISTS users (
     biography TEXT(1000),
     profile_image_url VARCHAR(255),
     favourite_pets VARCHAR(255),
+    verified INT(1) default 0, -- For email verification
     activated INT(1) DEFAULT 1 -- By default, mark as activated.
+) CHARACTER SET=utf8;
+
+-- Pending verifications
+CREATE TABLE IF NOT EXISTS user_verifications (
+    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(11) UNSIGNED NOT NULL,
+    verification_key VARCHAR(255) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) CHARACTER SET=utf8;
 
 -- Table of users following one another

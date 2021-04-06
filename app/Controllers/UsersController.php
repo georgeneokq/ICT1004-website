@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Models\User;
 use App\Models\UserSession;
+use App\Models\UserVerification;
 
 use Illuminate\Database\Capsule\Manager as DB;
 use GuzzleHttp\Psr7\Response;
@@ -52,6 +53,35 @@ class UsersController extends Controller
         $user->last_name = $last_name;
         $user->biography = $biography;
         if($user->save()) {
+            /* Create new key for the user's verification via email, save to database, and email the link to the user */
+            $key = hash('sha256', $user->email . $user->first_name . time()); /* Hash email, first_name and current time using SHA256 */
+            $user_verification = new UserVerification();
+            $user_verification->user_id = $user->id;
+            $user_verification->verification_key = $key;
+            $user_verification->save();
+            $url = getenv('APP_URL') . '/account/verify/?key=' . $key;
+            $subject = 'Verify your email for Petstonks';
+            $from = [getenv('MAIL_ADDR') => 'Petstonks'];
+            $to = [$user->email];
+            $body = '
+            <div class="main" style="display:block;margin:0 auto;max-width: 100%;border:1px solid black;padding:5% 15%;">
+                <h2 style="text-align:center">Email Verification</h2>
+                <br>
+                <p style="font-size:18px;text-align:center;">Hey there, ' . $user->first_name . '! Thank you for signing up for an account with PetStonks.</p>
+                <br>
+                <form action="' . $url . '">
+                <input type="submit" value="Click to verify" style="display:block;margin:0 auto;text-align:center;background:orange;font-weight:bold;color:white;border-radius:3px;padding:15px;outline:none;border:None;width:200px;cursor:pointer;">
+                </form>
+            </div>
+            ';
+            $alternative_body = sprintf('Hey there, %s! Thank you for signing up for an account with PetStonks. Access this link to verify your account: %s', $user->first_name, $url);
+            $message = (new \Swift_Message())
+                        ->setFrom($from)
+                        ->setTo($to)
+                        ->setSubject($subject)
+                        ->setBody($body, 'text/html')
+                        ->addPart($alternative_body, 'text/plain');
+            $result = $this->getMailer()->send($message);
             $response->getBody()->write($this->encode([
                 'err' => 0
             ]));

@@ -1,4 +1,4 @@
-let production = false;
+let production = true;
 let BASE_URL;
 
 /*
@@ -90,7 +90,7 @@ async function signup(e) {
     if (!data.err) {
         Swal.fire({
             title: 'Success',
-            text: 'You have successfully registered your account.',
+            html: 'You have successfully registered your account.<br>Please check your email for a verification link.',
             icon: 'success'
         });
         nameField.value = '';

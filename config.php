@@ -10,5 +10,7 @@ return [
         'charset' => getenv('DB_CHARSET'),
     ],
     'displayErrorDetails' => (bool) getenv('DISPLAY_ERRORS'),
-    'timezone' => getenv('TIMEZONE')
+    'timezone' => getenv('TIMEZONE'),
+    'mail_address' => getenv('MAIL_ADDR'),
+    'mail_password' => getenv('MAIL_PASS')
 ];
