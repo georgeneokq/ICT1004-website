@@ -12,7 +12,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 class WebController extends Controller
 {
     private function redirect(Response $response, $url) {
-        $response = $response->withHeader(302);
+        $response = $response->withStatus(302);
         return $response->withHeader('Location', $url);
     }
     public function landing(Request $request, Response $response) {
