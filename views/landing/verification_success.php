@@ -44,8 +44,8 @@
         counterEl.innerText = counterTime;
         window.setInterval(() => {
             counterEl.innerText = --counterTime;
-            if (counterTime == 0) return;
-                // window.location.href = '/';
+            if (counterTime == 0)
+                window.location.href = '/';
         }, 1000);
     </script>
 </body>
