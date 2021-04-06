@@ -78,6 +78,19 @@
     }
 }
 
+.sticky {
+    position: sticky;
+}
+
+.modal-header .close {
+    padding: 1rem;
+    margin: -1rem -1rem -1rem;
+}
+
+.previewimg {
+    display: none;
+}
+
 .sidebar-wrapper {
     width: 280px;
     height: 100%;
@@ -108,9 +121,9 @@
 }
 
 .sidebar-wrapper .sidebar-content {
-    max-height: calc(100% -35px);
-    height: calc(100% - 35px);
-    overflow-y: scroll;
+    max-height: calc(100%);
+    height: calc(100%);
+    overflow-y: auto;
     position: relative;
 }
 
@@ -501,6 +514,39 @@
 
 body {
     font-size: .9rem;
+}
+
+.user-pic .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #808080;
+}
+
+.user-pic:hover .overlay {
+    opacity: 0.9;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5);
+    /* Black see-through */
+    color: #f1f1f1;
+    width: 100%;
+    transition: .5s ease;
+    opacity: 0;
+    color: white;
+    font-size: 20px;
+    padding: 20px;
+    text-align: center;
 }
 
 
@@ -1450,4 +1496,49 @@ body {
     -webkit-box-shadow: 0px -1px 5px rgba(236, 236, 236, 0.8);
     box-shadow: 0px -1px 5px rgba(236, 236, 236, 0.8);
     border-top: 1px solid white;
+}
+
+
+/*------scroll bar---------------------*/
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #525965;
+    border: 0px none #ffffff;
+    border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #525965;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: #525965;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    border: 0px none #ffffff;
+    border-radius: 50px;
+}
+
+::-webkit-scrollbar-track:hover {
+    background: transparent;
+}
+
+::-webkit-scrollbar-track:active {
+    background: transparent;
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
 }

@@ -125,6 +125,34 @@ class UsersController extends Controller
         return $response;
     }
 
+    public function updateProfile(Request $request, Response $response) {
+        $token = $request->getAttribute('_token');
+        $user = User::getByToken($token);
+
+        $body = $request->getParsedBody();
+
+        $first_name = $this->get($body, 'first_name');
+        $last_name = $this->get($body, 'last_name');
+        $biography = $this->get($body, 'biography');
+
+        $user->first_name = $first_name;
+        $user->last_name = $last_name;
+        $user->biography = $biography;
+
+        if($user->save()) {
+            $response->getBody()->write($this->encode([
+                'err' => 0,
+                'user' => $user
+            ]));
+        } else {
+            $response->getBody()->write($this->encode([
+                'err' => 1,
+                'msg' => 'Error has occured'
+            ]));
+        }
+        return $response;
+    }
+
     public function updateProfileImage(Request $request, Response $response) {
         $profile_image = $this->get($request->getUploadedFiles(), 'profile_image'); // Might need a [0] here.
 
