@@ -30,7 +30,7 @@ class WebController extends Controller
         $params = $request->getQueryParams();
         $key = $this->get($params, 'key');
         if(!$key) {
-            return redirect($response, '/');
+            return $this->redirect($response, '/');
         }
         $verification = UserVerification::where('verification_key', $key)->first();
         if($verification) {
