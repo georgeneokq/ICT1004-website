@@ -59,15 +59,14 @@ class UsersController extends Controller
             $user_verification->user_id = $user->id;
             $user_verification->verification_key = $key;
             $user_verification->save();
-            $url = getenv('APP_URL') . '/account/verify/?key=' . $key;
+            $url = getenv('APP_URL') . '/account/verify/' . $key;
             $subject = 'Verify your email for Petstonks';
             $from = [getenv('MAIL_ADDR') => 'Petstonks'];
             $to = [$user->email];
             $body = '
             <div class="main" style="display:block;margin:0 auto;max-width: 100%;border:1px solid black;padding:5% 15%;">
-                <h2 style="text-align:center">Email Verification</h2>
-                <br>
-                <p style="font-size:18px;text-align:center;">Hey there, ' . $user->first_name . '! Thank you for signing up for an account with PetStonks.</p>
+                <h2 style="text-align:center;color:black;">Email Verification</h2>
+                <p style="font-size:18px;text-align:center;color:black;">Hey there, ' . $user->first_name . '! Thank you for signing up for an account with PetStonks.</p>
                 <br>
                 <form action="' . $url . '">
                 <input type="submit" value="Click to verify" style="display:block;margin:0 auto;text-align:center;background:orange;font-weight:bold;color:white;border-radius:3px;padding:15px;outline:none;border:None;width:200px;cursor:pointer;">

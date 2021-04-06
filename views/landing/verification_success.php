@@ -17,6 +17,14 @@
         p {
             text-align: center;
         }
+
+        section[role=main] {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
     </style>
 </head>
 
@@ -36,9 +44,9 @@
         counterEl.innerText = counterTime;
         window.setInterval(() => {
             counterEl.innerText = --counterTime;
-            if (counterTime == 0)
-                window.location.href = '/';
-        }, 5 * 1000);
+            if (counterTime == 0) return;
+                // window.location.href = '/';
+        }, 1000);
     </script>
 </body>
 

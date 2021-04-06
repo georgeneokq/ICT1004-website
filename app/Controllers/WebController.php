@@ -26,9 +26,8 @@ class WebController extends Controller
     }
 
     /* For email verification */
-    public function verifyAccount(Request $request, Response $response) {
+    public function verifyAccount(Request $request, Response $response, $key) {
         $params = $request->getQueryParams();
-        $key = $this->get($params, 'key');
         if(!$key) {
             return $this->redirect($response, '/');
         }
@@ -39,7 +38,12 @@ class WebController extends Controller
             $user->verified = 1;
             $user->save();
             $verification->delete();
-            return $this->view->render($response, 'landing/verification_success.php');
+            $args = [
+                'user' => $user
+            ];
+            return $this->view->render($response, 'landing/verification_success.php', $args);
+        } else {
+            return $this->redirect($response, '/');
         }
     }
 }
