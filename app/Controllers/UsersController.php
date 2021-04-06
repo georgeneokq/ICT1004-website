@@ -159,4 +159,32 @@ class UsersController extends Controller
         /* TODO: REPLACE WITH ACTUAL URL ONCE INTERGRATED WITH S3BUCKET */
         $profile_image_url = 'https://animeshelter.com/wp-content/uploads/2020/11/jujutsu-kaisen-episode-7-2455.jpg';
     }
+
+    public function updateProfile(Request $request, Response $response) {
+        $token = $request->getAttribute('_token');
+        $user = User::getByToken($token);
+        
+        $body = $request->getParsedBody();
+
+        $first_name = $this->get($body, 'firstnamechange');
+        $last_name = $this->get($body, 'lastnamechange');
+        $biography = $this->get($body, 'biographychange');
+
+        $user->first_name = $first_name;
+        $user->last_name = $last_name;
+        $user->biography = $biography;
+
+        if($user->save()) {
+            $response->getBody()->write($this->encode([
+                'err' => 0
+            ]));
+        } else {
+            $response->getBody()->write($this->encode([
+                'err' => 1,
+                'msg' => 'An error has occurred.'
+            ]));
+        }
+        return $response;
+    }
+
 }
