@@ -54,7 +54,7 @@ async function login(e) {
         // console.log(localStorage._token);
         // console.log(data._token);
         /* Redirect to posts page */
-        window.location.href = '/home.html';
+        window.location.href = '/home';
     } else {
         window.alert(data.msg);
     }
