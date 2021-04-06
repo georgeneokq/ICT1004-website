@@ -94,7 +94,8 @@ class PostsController extends Controller
         $files_count = isset($_FILES['images']) ? count($_FILES['images']['name']) : 0;
         for($i = 0; $i < $files_count; $i++) {
             $name = $_FILES["images"]["name"][$i];
-            $extension = end((explode(".", $name)));
+            $parts = explode(".", $name);
+            $extension = end($parts);
             $file_name = sprintf('%s_%s.%s', $post->id, $i + 1, $extension); // {post_id}_{counter}.{extension}
             $file_save_path = sprintf('%s/%s', $this->post_images_upload_path, $file_name);
             $file_url = sprintf('/uploads/post-images/%s', $file_name); /* Might want to change this to the full site URL */

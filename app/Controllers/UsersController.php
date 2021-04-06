@@ -11,6 +11,15 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class UsersController extends Controller
 {
+    private $profile_images_upload_path;
+
+    public function __construct() {
+        $this->profile_images_upload_path = uploadsPath('profile-images');
+        if(!is_dir($this->profile_images_upload_path)) {
+            mkdir($this->profile_images_upload_path, 0777, true); // 3rd parameter true for recursive
+        }
+    }
+
     public function getAllUsers(Request $request, Response $response) {
         $users = User::all();
         $response->getBody()->write($this->encode($users));
@@ -125,39 +134,35 @@ class UsersController extends Controller
         return $response;
     }
 
-    public function updateProfile(Request $request, Response $response) {
+    public function updateProfileImage(Request $request, Response $response) {
         $token = $request->getAttribute('_token');
         $user = User::getByToken($token);
 
-        $body = $request->getParsedBody();
-
-        $first_name = $this->get($body, 'first_name');
-        $last_name = $this->get($body, 'last_name');
-        $biography = $this->get($body, 'biography');
-
-        $user->first_name = $first_name;
-        $user->last_name = $last_name;
-        $user->biography = $biography;
-
-        if($user->save()) {
-            $response->getBody()->write($this->encode([
-                'err' => 0,
-                'user' => $user
-            ]));
-        } else {
+        if(!isset($_FILES['profile_image'])) {
             $response->getBody()->write($this->encode([
                 'err' => 1,
-                'msg' => 'Error has occured'
+                'msg' => 'Required field "profile_image" is missing.'
             ]));
+            return $response;
         }
+
+        $name = $_FILES["profile_image"]["name"]; /* Get original name */
+        $parts = explode(".", $name); /* Extract extension from file name */
+        $extension = end($parts);
+        $file_name = sprintf('%s.%s', $user->email, $extension); /* New file name: {email}.{extension} */
+        $file_save_path = sprintf('%s/%s', $this->profile_images_upload_path, $file_name); /* New file path */
+        $file_url = sprintf('/uploads/profile-images/%s', $file_name); /* public URL to retrieve image */
+        $tmp_location = $_FILES['profile_image']['tmp_name'];
+        move_uploaded_file($tmp_location, $file_save_path);
+
+        /* Update user profile image url */
+        $user->profile_image_url = $file_url;
+        $user->save();
+
+        $response->getBody()->write($this->encode([
+            'err' => 0
+        ]));
         return $response;
-    }
-
-    public function updateProfileImage(Request $request, Response $response) {
-        $profile_image = $this->get($request->getUploadedFiles(), 'profile_image'); // Might need a [0] here.
-
-        /* TODO: REPLACE WITH ACTUAL URL ONCE INTERGRATED WITH S3BUCKET */
-        $profile_image_url = 'https://animeshelter.com/wp-content/uploads/2020/11/jujutsu-kaisen-episode-7-2455.jpg';
     }
 
     public function updateProfile(Request $request, Response $response) {

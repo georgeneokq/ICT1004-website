@@ -30,12 +30,13 @@ $app->group('/api', function(RouteCollectorProxy $group) {
     $group->group('', function(RouteCollectorProxy $group) {
 
         $group->get('/users/profile', C.'UsersController:getProfile');
-        $group->post('/users/profile/update', C.'UsersController:updateProfile');
         $group->post('/users/logout', C.'UsersController:logout');
         $group->get('/news-feed', C.'PostsController:getNewsFeed');
         $group->post('/posts/create', C.'PostsController:createPost');
         $group->post('/posts/like', C.'PostsController:likePost');
         $group->delete('/posts/like', C.'PostsController:unlikePost');
+        $group->post('/users/update/profile', C.'UsersController:updateProfile');
+        $group->post('/users/update/profile-image', C.'UsersController:updateProfileImage');
         $group->post('/users/updateProfile', C.'UsersController:updateProfile');
 
     })->add(new AuthToken());
