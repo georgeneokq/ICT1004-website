@@ -13,16 +13,6 @@ let BASE_URL;
     }
 })();
 
-/*tinymce.init({
-    selector: '#content',
-    theme: 'modern',
-    add_form_submit_trigger : false,
-    mobile: {
-      theme: 'mobile',
-      plugins: [ 'autosave', 'lists', 'autolink' ],
-      toolbar: [ 'undo', 'bold', 'italic', 'styleselect' ]
-    }
-  }); */
 
 /*
  * createpost
@@ -43,8 +33,7 @@ async function createpost(e) {
     let data = await response.json();
 
     if (!data.err) {
-        console.log(data);
-        document.getElementById("posterror").innerHTML = "Success";
+        Swal.fire({ icon: 'success', text: 'Success!' });
     } else {
         Swal.fire(data.msg);
     }
@@ -219,7 +208,7 @@ async function initializeNewsFeed(elementSelector) {
         }
 
         // Form the HTML and add to container
-
+        // posts = posts.reverse();
         for (let post of posts) {
             // console.log(post.is_liked);
             // console.log(post);
@@ -340,8 +329,9 @@ async function initializeNewsFeed(elementSelector) {
         if (isNewsFeedEnd) {
             container.removeEventListener('scroll', scrollListener);
         }
-        // Load more posts if the scroll has hit the bottom
-        if (container.scrollTop >= (container.scrollHeight - container.offsetHeight) && !isLoading) {
+        // Load more posts if the scroll has hit the bottom, with some leeway
+        const leeway = 200;
+        if (container.scrollTop >= (container.scrollHeight - container.offsetHeight - leeway) && !isLoading) {
             loadImages();
         }
     };
