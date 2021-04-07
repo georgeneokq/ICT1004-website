@@ -90,12 +90,14 @@ class PostsController extends Controller
         $post->category = $category;
         $post->content = $content;
         $post->save();
-        
+
         $files_count = isset($_FILES['images']) ? count($_FILES['images']['name']) : 0;
         for($i = 0; $i < $files_count; $i++) {
             $name = $_FILES["images"]["name"][$i];
             $parts = explode(".", $name);
             $extension = end($parts);
+            if(!$extension)
+                break;
             $file_name = sprintf('%s_%s.%s', $post->id, $i + 1, $extension); // {post_id}_{counter}.{extension}
             $file_save_path = sprintf('%s/%s', $this->post_images_upload_path, $file_name);
             $file_url = sprintf('/uploads/post-images/%s', $file_name); /* Might want to change this to the full site URL */
@@ -194,6 +196,36 @@ class PostsController extends Controller
         
         $response->getBody()->write($this->encode([
             'err' => 0,
+        ]));
+        return $response;
+    }
+
+    public function deletePost(Request $request, Response $response) {
+        $params = $request->getQueryParams();
+        $post_id = $this->get($params, 'id');
+        $post = Post::find($post_id);
+        if(!$post) {
+            $response->getBody()->write($this->encode([
+                'err' => 1,
+                'msg' => 'No such post'
+            ]));
+            return $response;
+        }
+
+        // Check if post belongs to user
+        $token = $request->getAttribute('_token');
+        $user = User::getByToken($token);
+        if($post->user->id != $user->id) {
+            $response->getBody()->write($this->encode([
+                'err' => 1,
+                'msg' => 'This post does not belong to this user'
+            ]));
+            return $response;
+        }
+
+        $post->delete();
+        $response->getBody()->write($this->encode([
+            'err' => 0
         ]));
         return $response;
     }
