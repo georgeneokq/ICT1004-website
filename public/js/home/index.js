@@ -78,6 +78,17 @@ async function loadUserProfile() {
         document.getElementById("firstnamechange").value = user.first_name;
         document.getElementById("lastnamechange").value = user.last_name;
         document.getElementById("biographychange").value = user.biography;
+
+        /* User email verified status */
+        let circle = document.querySelector('.sidebar-wrapper .sidebar-header .user-info .user-status i');
+        let statusEl = document.querySelector('.user-status span');
+        if (user.verified) {
+            circle.style.color = '#5cb85c';
+            statusEl.innerText = 'Verified';
+        } else {
+            circle.style.color = 'red';
+            statusEl.innerText = 'Not verified';
+        }
     } else {
         Swal.fire(data.msg);
     }
