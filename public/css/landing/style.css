@@ -321,7 +321,7 @@ header.masthead .container {
 }
 
 .masthead .container.right-panel-active .sign-in-container {
-    transform: translateX(100%);
+    /* transform: translateX(100%); */
 }
 
 .masthead .container.right-panel-active .sign-up-container {
