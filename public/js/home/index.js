@@ -177,6 +177,7 @@ async function initializeNewsFeed(elementSelector) {
         for (let post of posts) {
             let html = `
             <div class="post" data-post-id="${post.id}">
+            <button class="img-btn"><img src="/img/icons/icon-trash.png"></button>
             <img src="${getUserProfileImage(post.user)}" class="post-profile-image" width="100px">
             <a href="javascript:void(0)" class="post-profile-username">${post.user.first_name + ' ' + post.user.last_name}</a>
             <br>
