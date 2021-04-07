@@ -13,9 +13,48 @@ let BASE_URL;
     }
 })();
 
+/*tinymce.init({
+    selector: '#content',
+    theme: 'modern',
+    add_form_submit_trigger : false,
+    mobile: {
+      theme: 'mobile',
+      plugins: [ 'autosave', 'lists', 'autolink' ],
+      toolbar: [ 'undo', 'bold', 'italic', 'styleselect' ]
+    }
+  }); */
+
+/*
+ * createpost
+ */
+let cp = document.querySelector('#createpost');
+cp.addEventListener('submit', createpost);
+async function createpost(e) {
+    e.preventDefault();
+
+    let form = document.querySelector('#createpost');
+    let body = new FormData(form);
+    let url = BASE_URL + '/api/posts/create';
+    let response = await fetch(url, {
+        headers: { _token: localStorage._token },
+        body,
+        method: 'post'
+    });
+    let data = await response.json();
+
+    if (!data.err) {
+        console.log(data);
+        document.getElementById("posterror").innerHTML = "Success";
+    } else {
+        Swal.fire(data.msg);
+    }
+};
+
+
 /*
  * Load the user profile
  */
+let user;
 async function loadUserProfile() {
     let url = BASE_URL + '/api/users/profile';
 
@@ -23,7 +62,7 @@ async function loadUserProfile() {
     let data = await response.json();
 
     if (!data.err) {
-        let user = data.user;
+        user = data.user;
 
         let profileImgEl = document.querySelector('.user-pic img');
         let nameEl = document.querySelector('.user-name');
@@ -34,21 +73,11 @@ async function loadUserProfile() {
             var newimg = '/img/icons/icon-user.jpg';
             profileImgEl.src = newimg;
         }
-        nameEl.innerText = user.first_name;
+        nameEl.innerText = user.last_name ? user.first_name + ' ' + user.last_name : user.first_name;
+        //emailEl.innerText = user.email;
         document.getElementById("firstnamechange").value = user.first_name;
         document.getElementById("lastnamechange").value = user.last_name;
         document.getElementById("biographychange").value = user.biography;
-
-        /* User email verified status */
-        let circle = document.querySelector('.sidebar-wrapper .sidebar-header .user-info .user-status i');
-        let statusEl = document.querySelector('.user-status span');
-        if (user.verified) {
-            circle.style.color = '#5cb85c';
-            statusEl.innerText = 'Verified';
-        } else {
-            circle.style.color = 'red';
-            statusEl.innerText = 'Not verified';
-        }
     } else {
         Swal.fire(data.msg);
     }
@@ -70,9 +99,14 @@ async function updateprofile(e) {
     let data = await response.json();
 
     if (!data.err) {
-        document.getElementById("upderror").innerHTML = "Success";
+        $('#myModal').modal('hide');
+        Swal.fire({
+            icon: 'success',
+            text: 'Success!'
+        });
     } else {
         document.getElementById("upderror").innerHTML = data.msg;
+        Swal.fire(data.msg);
     }
 };
 
@@ -174,12 +208,15 @@ async function initializeNewsFeed(elementSelector) {
         }
 
         // Form the HTML and add to container
+
         for (let post of posts) {
+            // console.log(post.is_liked);
+            // console.log(post);
             let html = `
-            <div class="post" data-post-id="${post.id}">
-            <button class="img-btn"><img src="/img/icons/icon-trash.png"></button>
+            <div class="post" data-post-id="${post.id}" data-user-id="${post.user_id}">
+            ${post.user_id == user.id ? '<button class="img-btn"><img src="/img/icons/icon-trash.png"></button>' : ''}
             <img src="${getUserProfileImage(post.user)}" class="post-profile-image" width="100px">
-            <a href="javascript:void(0)" class="post-profile-username">${post.user.first_name + ' ' + post.user.last_name}</a>
+            <a href="javascript:void(0)" class="post-profile-username">${post.user.last_name ? post.user.first_name + ' ' + post.user.last_name : post.user.first_name}</a>
             <br>
             Category: ${post.category}
             <br>
@@ -198,7 +235,7 @@ async function initializeNewsFeed(elementSelector) {
 
         // Make images expandable - The function is in util.js
         let postElements = document.getElementsByClassName('post');
-        for (let i = nextPostToRequest - postsPerRequest + 1; i < postElements.length; i++) {
+        for (let i = nextPostToRequest - postsPerRequest; i < postElements.length; i++) {
             let post = postElements[i];
             let images = post.getElementsByClassName('post-image');
             for (let j = 0; j < images.length; j++) {
@@ -241,9 +278,47 @@ async function initializeNewsFeed(elementSelector) {
 
         // Attach click event listener to the like button
         let likeButtons = document.getElementsByClassName('btn-like');
-        for (let i = 0; i < likeButtons.length; i++) {
+        for (let i = nextPostToRequest - postsPerRequest; i < likeButtons.length; i++) {
             let likeButton = likeButtons[i];
             likeButton.addEventListener('click', likeButtonListener);
+        }
+
+        const deleteButtonListener = async e => {
+            let button = e.target;
+            let postContainer = button.parentNode;
+            while (!postContainer.classList.contains('post')) {
+                postContainer = postContainer.parentNode;
+            }
+            let postId = postContainer.dataset.postId;
+            let url = BASE_URL + '/api/posts/delete?id=' + postId;
+            let response = await fetch(url, {
+                method: 'DELETE',
+                headers: { _token: localStorage._token }
+            });
+            let data = await response.json();
+
+            // Success?
+            if (data.err) {
+                Swal.fire({
+                    icon: 'error',
+                    text: data.msg
+                });
+            } else {
+                console.log('test');
+                console.log(postContainer);
+                let $postContainer = $(postContainer);
+                $postContainer.animate({
+                    height: 0,
+                    opacity: 0
+                }, 500, function() {
+                    postContainer.parentNode.removeChild(postContainer);
+                });
+            }
+        };
+        /* Attach the event listeners */
+        let deleteButtons = document.querySelectorAll('.post .img-btn');
+        for (let i = 0; i < deleteButtons.length; i++) {
+            deleteButtons[i].addEventListener('click', deleteButtonListener);
         }
 
         isLoading = false;
@@ -318,19 +393,24 @@ btnLogout.addEventListener('click', async function(e) {
 });
 
 /* Profile image upload preview */
-function previewImage(input) {
+function previewImage(input, id) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {
-            $('#preview').attr('src', e.target.result);
+            $(id).attr('src', e.target.result);
         }
         reader.readAsDataURL(input.files[0]); // convert to base64 string
     }
 }
 
 $("#file").change(function() {
-    previewImage(this);
     $('#preview').css('display', 'block').attr('src', '/img/loading.gif');
+    previewImage(this, "#preview");
+});
+
+$("#post_image").change(function() {
+    $('#postpreview').css('display', 'block').attr('src', '/img/loading.gif');
+    previewImage(this, "#postpreview");
 });
 
 /* Profile image upload */

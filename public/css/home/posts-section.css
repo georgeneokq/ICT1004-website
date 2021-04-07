@@ -1,3 +1,9 @@
+@keyframes upsize {
+    to {
+        transform: scale(1.2);
+    }
+}
+
 .post {
     padding: 5%;
     border-bottom: 2px solid lightgrey;
@@ -6,6 +12,12 @@
 .img-btn {
     background: none;
     outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.img-btn img {
+    width: 100%;
 }
 
 .img-btn:focus {
@@ -14,6 +26,12 @@
 
 .post .img-btn {
     float: right;
+    width: 48px;
+}
+
+.post .img-btn:hover {
+    /* transform: scale(1.2); */
+    animation: upsize 1;
 }
 
 .post-image {
@@ -27,6 +45,7 @@
 .post-profile-image {
     border-radius: 50%;
     margin-right: 15px;
+    max-width: 75px;
 }
 
 a.post-profile-username {

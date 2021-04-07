@@ -9,7 +9,23 @@
 }
 
 body {
-    background: rgb(200, 200, 0);
+    background: rgb(255, 255, 255);
+}
+
+.logout {
+    margin: 1em 1em;
+}
+
+.logoutbtn {
+    width: 80%;
+    background-color: #4CAF50;
+    padding-top: .8em;
+    padding-bottom: .8em;
+    margin: auto;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 
@@ -48,4 +64,8 @@ body {
 #preview {
     max-width: 100%;
     margin: 0 auto;
+}
+
+#postpreview {
+    width: 100%;
 }

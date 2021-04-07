@@ -103,7 +103,7 @@ function enableModalImages(className, customOptions = {}) {
 
             let img = e.target;
 
-            let modalHtml = `<div style="background:` + options.overlayColor + `;width:100%;height:100vh;display:flex;position:fixed;top:0;left:0;z-index:2;" id="image-modal">
+            let modalHtml = `<div style="background:` + options.overlayColor + `;width:100%;height:100vh;display:flex;position:fixed;top:0;left:0;z-index:999999;" id="image-modal">
                                 <span onclick="closeImageModal()" style="color:` + options.closeButtonColor + `;position:absolute;top:2%;right:2%;z-index:3;font-weight:bold;font-size:40px;user-select:none;font-family:Arial;cursor:pointer;">X</span>
                                 <div class="geo-modal-image-container" style="margin:0 auto;align-self:center;max-height:100vh;position:relative;">
                                     <img src="` + img.src + `" alt="Image" style="object-fit:contain;max-width:100%;max-height:100vh;margin:0 auto;display:block;position:relative;">
@@ -173,7 +173,7 @@ function enableModalImage(imgEl, customOptions = {}) {
     imgEl.addEventListener('click', function(e) {
         let img = e.target;
 
-        let modalHtml = `<div style="background:` + options.overlayColor + `;width:100%;height:100vh;display:flex;position:fixed;top:0;left:0;z-index:2;" id="image-modal">
+        let modalHtml = `<div style="background:` + options.overlayColor + `;width:100%;height:100vh;display:flex;position:fixed;top:0;left:0;z-index:999999;" id="image-modal">
                             <span onclick="closeImageModal()" style="color:` + options.closeButtonColor + `;position:absolute;top:2%;right:2%;z-index:3;font-weight:bold;font-size:40px;user-select:none;font-family:Arial;cursor:pointer;">X</span>
                             <div class="geo-modal-image-container" style="margin:0 auto;align-self:center;max-height:100vh;position:relative;">
                                 <img src="` + img.src + `" alt="Image" style="object-fit:contain;max-width:100%;max-height:100vh;margin:0 auto;display:block;position:relative;">
