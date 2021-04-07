@@ -49,7 +49,6 @@ class PostsController extends Controller
          * Query for posts of the user himself and the accounts the user is following
          */
         $posts = DB::select('SELECT DISTINCT posts.id, posts.user_id, posts.content, posts.category, posts.created_at FROM followers LEFT JOIN posts ON posts.user_id = followers.following_user_id WHERE followers.user_id = ? OR posts.user_id = ? ORDER BY posts.created_at DESC, posts.id, posts.user_id, posts.content, posts.category LIMIT ?, ?', [$user->id, $user->id, $start, $end]);
-        // $posts = array_reverse($posts);
 
         // For each post, get the post_image(s) and user, and whether it is liked by the user
         foreach($posts as $post) {
@@ -62,9 +61,9 @@ class PostsController extends Controller
             $post->num_likes = $num_likes;
             $images = PostImage::where('post_id', $post->id)->get();
             $post->images = $images;
-            $user = User::find($post->user_id);
-            unset($user->password);
-            $post->user = $user;
+            $post_user = User::find($post->user_id);
+            unset($post_user->password);
+            $post->user = $post_user;
         }
 
         $response->getBody()->write($this->encode([

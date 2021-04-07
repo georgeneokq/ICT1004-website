@@ -51,12 +51,12 @@ async function login(e) {
     if (!data.err) {
         /* Save token to localStorage */
         localStorage._token = data._token;
-        // console.log(localStorage._token);
-        // console.log(data._token);
         /* Redirect to posts page */
         window.location.href = '/home';
     } else {
-        window.alert(data.msg);
+        Swal.fire({
+            text: data.msg
+        });
     }
 }
 

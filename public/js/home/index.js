@@ -33,6 +33,7 @@ async function createpost(e) {
     let data = await response.json();
 
     if (!data.err) {
+        $('#createpostmodal').modal('hide');
         Swal.fire({ icon: 'success', text: 'Success!' });
     } else {
         Swal.fire(data.msg);
@@ -79,7 +80,11 @@ async function loadUserProfile() {
             statusEl.innerText = 'Not verified';
         }
     } else {
-        Swal.fire(data.msg);
+        // Invalid token
+        Swal.fire({
+            icon: 'error',
+            html: `${data.msg}<br>Click here to go back to the main page.`
+        });
     }
 }
 
@@ -208,9 +213,7 @@ async function initializeNewsFeed(elementSelector) {
         }
 
         // Form the HTML and add to container
-        // posts = posts.reverse();
         for (let post of posts) {
-            // console.log(post.is_liked);
             // console.log(post);
             let html = `
             <div class="post" data-post-id="${post.id}" data-user-id="${post.user_id}">
