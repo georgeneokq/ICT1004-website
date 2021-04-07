@@ -81,10 +81,8 @@ async function loadUserProfile() {
         }
     } else {
         // Invalid token
-        Swal.fire({
-            icon: 'error',
-            html: `${data.msg}<br>Click here to go back to the main page.`
-        });
+        window.location.href = '/';
+        localStorage.removeItem('_token');
     }
 }
 
