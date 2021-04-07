@@ -242,15 +242,15 @@
                 <div class="modal-body">
                     <form id="updateprofile">
                         <div class="form-group">
-                            <label for="firstname">First Name</label>
+                            <label for="firstnamechange">First Name</label>
                             <input type="text" class="form-control" name="firstnamechange" id="firstnamechange" aria-describedby="firstnamechange" placeholder="Change First Name" value="">
                         </div>
                         <div class="form-group">
-                            <label for="lastname">last Name</label>
+                            <label for="lastnamechange">last Name</label>
                             <input type="text" class="form-control" name="lastnamechange" id="lastnamechange" aria-describedby="lastnamechange" placeholder="Change Last Name" value="">
                         </div>
                         <div class="form-group">
-                            <label for="bio">Biography</label>
+                            <label for="biographychange">Biography</label>
                             <input type="text" class="form-control" name="biographychange" id="biographychange" aria-describedby="biographychange" placeholder="Change Biography" value="">
                         </div>
                         <p id="upderror"></p>
@@ -275,7 +275,7 @@
                 <div class="modal-body">
                     <!-- Form -->
                     <form id="changeimg">
-                        <label for="Category">Select file :</label>
+                        <label for="file">Select file :</label>
                         <input type="file" name="profile_image" id="file" aria-label="Change Profile Img" class="form-control">
                         <br>
                         <img id="preview" class="previewimg" src="#" style="display: none;" alt="imagepreview" />
@@ -302,9 +302,9 @@
                 <div class="modal-body">
                     <form id="createpost">
                         <div class="form-group form-group-lg">
-                            <label for="firstname">Content</label>
+                            <label for="content">Content</label>
                             <!--<input type="text" class="form-control inputlg" name="content" id="content" aria-describedby="content" placeholder="Content" required>-->
-                            <textarea type='text' class="form-control inputlg" name="content" id="content" aria-describedby="content" placeholder="Content"required></textarea>
+                            <textarea class="form-control inputlg" name="content" id="content" aria-describedby="content" placeholder="Content" required></textarea>
                         </div>
                         <div class="form-group">
                             <label for="post_image">Select file :</label> 
@@ -312,9 +312,10 @@
                             <img id="postpreview" class="previewimg" src="#" style="display: none;" alt="imagepreview " />
                         </div>
                         <div class="form-group">
-                            <label for="Category">Pet Category:</label>
-                            <select class="form-select form-select-lg mb-3" name="category" aria-label="Category" required>
-                                <option value="Others" selected>Others</option>
+                            <label for="category-select">Pet Category:</label>
+                            <select id="category-select" class="form-select form-select-lg mb-3" name="category" aria-label="Category" required>
+                                <option value="">--Select category--</option>
+                                <option value="Others">Others</option>
                                 <option value="Cat">Cat</option>
                                 <option value="Dog">Dog</option>
                                 <option value="Bird">Bird</option>
@@ -338,7 +339,7 @@
 
     <!-- using online scripts -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js "></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js " integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut " crossorigin="anonymous ">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js " integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut " crossorigin="anonymous">
     </script>
     <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
