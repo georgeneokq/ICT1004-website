@@ -25,6 +25,10 @@ class WebController extends Controller
         return $this->view->render($response, 'home/index.php');
     }
 
+    public function follow($request, $response) {
+        return $this->view->render($response, 'follow/index.php');
+    }
+
     /* For email verification */
     public function verifyAccount(Request $request, Response $response, $key) {
         $params = $request->getQueryParams();

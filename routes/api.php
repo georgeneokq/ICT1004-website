@@ -28,6 +28,7 @@ $app->group('/api', function(RouteCollectorProxy $group) {
     
     /* ROUTES THAT REQUIRE TOKEN AUTHENTICATION GO HERE!!! */
     $group->group('', function(RouteCollectorProxy $group) {
+        $group->post('/users/follow', C.'UsersController:follow');
 
         $group->get('/users/profile', C.'UsersController:getProfile');
         $group->post('/users/logout', C.'UsersController:logout');

@@ -15,6 +15,30 @@ class UsersController extends Controller
 {
     private $profile_images_upload_path;
 
+    public function follow($request, $response) {
+        $token = $request->getAttribute('_token');
+        $user = User::getByToken($token);
+
+        $body = $request->getParsedBody();
+        $user_to_follow = $this->get($body, 'user_to_follow');
+
+        $follower = new Follower();
+        $follower->user_id = $user->id;
+        $follower->following_user_id = $user_to_follow;
+        $follower->save();
+        if($follower->save()) {
+            $response->getBody()->write($this->encode([
+                'err' => 0
+            ]));
+        } else {
+            $response->getBody()->write($this->encode([
+                'err' => 1,
+                'msg' => 'Error.'
+            ]));
+        }
+        return $response;
+     }
+
     public function __construct() {
         $this->profile_images_upload_path = uploadsPath('profile-images');
         if(!is_dir($this->profile_images_upload_path)) {
