@@ -236,7 +236,8 @@ async function initializeNewsFeed(elementSelector) {
 
         // Make images expandable - The function is in util.js
         let postElements = document.getElementsByClassName('post');
-        for (let i = nextPostToRequest - postsPerRequest; i < postElements.length; i++) {
+        let i = (nextPostToRequest - postsPerRequest) < 0 ? 0 : (nextPostToRequest - postsPerRequest);
+        for (; i < postElements.length; i++) {
             let post = postElements[i];
             let images = post.getElementsByClassName('post-image');
             for (let j = 0; j < images.length; j++) {
@@ -279,7 +280,9 @@ async function initializeNewsFeed(elementSelector) {
 
         // Attach click event listener to the like button
         let likeButtons = document.getElementsByClassName('btn-like');
-        for (let i = nextPostToRequest - postsPerRequest; i < likeButtons.length; i++) {
+        i = (nextPostToRequest - postsPerRequest) < 0 ? 0 : (nextPostToRequest - postsPerRequest);
+        for (; i < likeButtons.length; i++) {
+
             let likeButton = likeButtons[i];
             likeButton.addEventListener('click', likeButtonListener);
         }
