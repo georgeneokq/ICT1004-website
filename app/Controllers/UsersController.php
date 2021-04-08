@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\User;
 use App\Models\UserSession;
 use App\Models\UserVerification;
+use App\Models\Follower;
 
 use Illuminate\Database\Capsule\Manager as DB;
 use GuzzleHttp\Psr7\Response;
@@ -53,6 +54,11 @@ class UsersController extends Controller
         $user->last_name = $last_name;
         $user->biography = $biography;
         if($user->save()) {
+            /* Follow self */
+            $follower = new Follower();
+            $follower->user_id = $user->id;
+            $follower->following_user_id = $user->id;
+            $follower->save();
             /* Create new key for the user's verification via email, save to database, and email the link to the user */
             $key = hash('sha256', $user->email . $user->first_name . time()); /* Hash email, first_name and current time using SHA256 */
             $user_verification = new UserVerification();
