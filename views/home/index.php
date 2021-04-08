@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-    <title>Pet$tonks</title>
+    <title>Sidebar template</title>
 
     <!-- Redirect if not logged in -->
     <script>
@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="/css/home/posts-section.css">
     <link rel="stylesheet" href="/css/home/index.css">
 
-    <link rel="shortcut icon" type="image/png" href="img/favicon.ico" />
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
 
     <script src="js/libs/sweetalert2.all.min.js"></script>
     <script src="js/util.js"></script>
@@ -79,12 +79,6 @@
                         <li class="header-menu">
                             <span>Functions</span>
                         </li>
-			<li>
-                            <a href="/home">
-                                <i class="fa fa-folder"></i>
-                                <span class="menu-text">Home</span>
-                            </a>
-                        </li>
                         <li>
                             <a data-toggle="modal" data-target="#myModal" href="#">
                                 <i class="fa fa-book"></i>
@@ -103,7 +97,7 @@
                                 <span data-toggle="modal" data-target="#createpostmodal" class="menu-text">Create Post</span>
                             </a>
                         </li>
-			<li>
+                        <li>
                             <a href="/follow">
                                 <i class="fa fa-folder"></i>
                                 <span class="menu-text">Follow</span>
