@@ -347,8 +347,10 @@ async function initializeNewsFeed(elementSelector) {
 }
 
 // News feed initialization is done in login function
-loadUserProfile();
-initializeNewsFeed('#posts'); /* COMMENT THIS OUT DURING HTML TESTING SO THE CONTENT DOESN'T GET ERASED */
+(async function() {
+    let _ = await loadUserProfile();
+    _ = await initializeNewsFeed('#posts'); /* COMMENT THIS OUT DURING HTML TESTING SO THE CONTENT DOESN'T GET ERASED */
+})();
 
 jQuery(function($) {
 
