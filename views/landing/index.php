@@ -88,21 +88,45 @@
                 </div>
             </div>
         </div>
+
+        <div id="form-container-mobile">
+            <div class="form-container-mobile sign-in-container-mobile">
+                <h1>Sign In</h1>
+                <form>
+                    <input type="email" name="email" placeholder="Email" class="form-control">
+                    <br>
+                    <input type="password" name="password" placeholder="Password" class="form-control">
+                    <br>
+                    <button type="submit">Sign In</button>
+                </form>
+                <br><br>
+                <a href="javascript:void(0)">No account? Register one now</a>
+            </div>
+
+            <div class="form-container-mobile sign-up-container-mobile">
+                <h1>Create Account</h1>
+                <form>
+                    <input type="text" name="name" placeholder="Name" class="form-control">
+                    <br>
+                    <input type="email" name="email" placeholder="Email" class="form-control">
+                    <br>
+                    <input type="password" name="password" placeholder="Password" class="form-control">
+                    <br>
+                    <button type="submit">Sign Up</button>
+                </form>
+                <br><br>
+                <a href="javascript:void(0)">Already have an account? Sign in</a>
+            </div>
+        </div>
     </header>
     <!-- Services-->
     <section class="page-section" id="About">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">About Us</h2>
-                <h3 class="section-subheading text-muted">We are a pet sharing and trading facilitator!
-                    Feel free to contact us for more information about our services or report any issues.
-                    
-                    Happy sharing!
-                    
-                    We would like to thank our course coordinator Prof. Scott Jones for his continued guidance through the creation of this dank website.
-                    
-                    #$tonks
-                    </h3>
+                <h3 class="section-subheading text-muted">We are a pet sharing and trading facilitator! Feel free to contact us for more information about our services or report any issues. Happy sharing! We would like to thank our course coordinator Prof. Scott Jones for his continued guidance
+                    through the creation of this dank website. #$tonks
+                </h3>
             </div>
             <div class="row text-center">
                 <div class="col-md-4">
@@ -248,7 +272,7 @@
                     </div>
                 </div>
             </div>
-		</div>
+        </div>
     </section>
     <section class="page-section" id="contact">
         <div class="container">
@@ -373,8 +397,7 @@
                                 <p class="item-intro text-muted">Oasis Second Chance Animal Shelter</p>
                                 <img class="img-fluid d-block mx-auto" src="img/portfolio/03-full.jpg" alt="" />
                                 <p>Oasis Second Chance Animal Shelter (OSCAS) is a registered charity and non-profit dog shelter that has been in existence since 2006. All the dogs in the shelter are mongrels rescued from the streets or from being culled.
-
-												About 100 Singapore Specials call this shelter home and needless to say, it can only be sustained with help from trusty volunteers and kind donations or sponsorships.</p>
+                                    About 100 Singapore Specials call this shelter home and needless to say, it can only be sustained with help from trusty volunteers and kind donations or sponsorships.</p>
                                 <button class="btn btn-primary" data-dismiss="modal" type="button">
                                         <i class="fas fa-times mr-1"></i>
                                         Close 

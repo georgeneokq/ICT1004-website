@@ -426,6 +426,69 @@ header.masthead .container {
     width: 40px;
 }
 
+
+/* Mobile version of login/signup */
+
+#form-container-mobile {
+    transform: translateY(-15%);
+}
+
+.form-container-mobile {
+    border-radius: 5px;
+    padding: 50px 5px;
+}
+
+.form-container-mobile h1 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.sign-in-container-mobile {
+    background: #FFF;
+    color: #000;
+}
+
+.sign-in-container-mobile a {
+    color: #000;
+    text-decoration: underline;
+}
+
+.sign-in-container-mobile button {
+    border-color: 1px solid #0ac8f8;
+    background: #0ac8f8;
+}
+
+.sign-up-container-mobile {
+    /* Not shown by default */
+    display: none;
+    background: linear-gradient(to right, #0a3488, #081866);
+}
+
+.sign-up-container-mobile a {
+    color: #FFF;
+    text-decoration: underline;
+}
+
+.sign-up-container-mobile button {
+    border-color: #FFF;
+    background: none;
+}
+
+@media only screen and (max-width: 568px) {
+    #form-container {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 569px) {
+    #form-container-mobile {
+        display: none;
+    }
+}
+
+
+/* End of mobile login section */
+
 section#contact {
     background-color: #212529;
     background-image: url("../assets/img/map-image.png");

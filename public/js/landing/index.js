@@ -30,7 +30,7 @@ signInButton.addEventListener('click', _ => {
 async function login(e) {
     e.preventDefault();
     /* get inputs */
-    let form = document.querySelector('.sign-in-container form');
+    let form = e.target;
     let email = form.querySelector('[name=email]').value;
     let password = form.querySelector('[name=password]').value;
 
@@ -107,6 +107,27 @@ async function signup(e) {
 /* Add event listeners for login and sign up */
 let loginForm = document.querySelector('.sign-in-container form');
 let signupForm = document.querySelector('.sign-up-container form');
+let mobileLoginForm = document.querySelector('.sign-in-container-mobile form');
+let mobileSignupForm = document.querySelector('.sign-up-container-mobile form');
 
 loginForm.addEventListener('submit', login);
+mobileLoginForm.addEventListener('submit', login);
 signupForm.addEventListener('submit', signup);
+mobileSignupForm.addEventListener('submit', signup);
+
+let mobileLoginContainer = document.querySelector('.sign-in-container-mobile');
+let mobileChangeToSignupBtn = mobileLoginContainer.querySelector('a');
+let mobileSignupContainer = document.querySelector('.sign-up-container-mobile');
+let mobileChangeToLoginBtn = mobileSignupContainer.querySelector('a');
+
+mobileChangeToSignupBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    $(mobileSignupContainer).css('display', 'block');
+    $(mobileLoginContainer).css('display', 'none');
+});
+
+mobileChangeToLoginBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    $(mobileLoginContainer).css('display', 'block');
+    $(mobileSignupContainer).css('display', 'none');
+});
