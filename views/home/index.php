@@ -97,6 +97,12 @@
                                 <span data-toggle="modal" data-target="#createpostmodal" class="menu-text">Create Post</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="/follow">
+                                <i class="fa fa-folder"></i>
+                                <span class="menu-text">Follow</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 
