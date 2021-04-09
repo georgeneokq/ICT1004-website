@@ -9,9 +9,7 @@
 </head>
 
 <body>
-    <ul>
-
-    </ul>
+    <ul></ul>
 
     <script>
         let url = '/api/users';

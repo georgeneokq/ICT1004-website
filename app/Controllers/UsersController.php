@@ -48,6 +48,7 @@ class UsersController extends Controller
 
     public function getAllUsers(Request $request, Response $response) {
         $users = User::all();
+        $users->makeHidden(['password']);
         $response->getBody()->write($this->encode($users));
         return $response;
     }
