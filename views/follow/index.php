@@ -27,7 +27,7 @@
     <script src="js/util.js"></script>
     <script src="js/home/index.js" defer></script>
     <!--<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script> -->
-    <script>
+    <script defer>
         let url = '/api/users';
         let followUrl = '/api/users/follow';
         let listener = async function(e) {

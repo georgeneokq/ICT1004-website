@@ -19,10 +19,10 @@ use Slim\Routing\RouteCollectorProxy;
 
 $app->group('/api', function(RouteCollectorProxy $group) {
     /* ROUTES ONLY FOR TESTING: TO BE REMOVED DURING PRODUCTION */
+    // $group->get('/seed', C.'DatabaseSeedController:seed');
+    
+    /* General routes accessible by anyone */
     $group->get('/users', C.'UsersController:getAllUsers');
-    $group->get('/seed', C.'DatabaseSeedController:seed');
-
-
     $group->post('/users/signup', C.'UsersController:signup');
     $group->post('/users/login', C.'UsersController:login');
     
